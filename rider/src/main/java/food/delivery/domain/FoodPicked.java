@@ -11,6 +11,10 @@ public class FoodPicked extends AbstractEvent {
 
     private Long id;
 
+    public FoodPicked(Delivery aggregate) {
+        super(aggregate);
+    }
+
     public FoodPicked() {
         super();
     }

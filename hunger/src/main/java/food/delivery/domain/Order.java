@@ -40,6 +40,12 @@ public class Order {
         addressChanged.publishAfterCommit();
     }
 
+    @PreUpdate
+    public void onPreUpdate() {}
+
+    @PreRemove
+    public void onPreRemove() {}
+
     public static OrderRepository repository() {
         OrderRepository orderRepository = HungerApplication.applicationContext.getBean(
             OrderRepository.class

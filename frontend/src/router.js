@@ -11,6 +11,8 @@ import OrderDetail from "./components/listers/OrderDetail"
 import CookingManager from "./components/listers/CookingCards"
 import CookingDetail from "./components/listers/CookingDetail"
 
+import DeliveryManager from "./components/listers/DeliveryCards"
+import DeliveryDetail from "./components/listers/DeliveryDetail"
 
 
 export default new Router({
@@ -39,6 +41,16 @@ export default new Router({
                 component: CookingDetail
             },
 
+            {
+                path: '/deliveries',
+                name: 'DeliveryManager',
+                component: DeliveryManager
+            },
+            {
+                path: '/deliveries/:id',
+                name: 'DeliveryDetail',
+                component: DeliveryDetail
+            },
 
 
 

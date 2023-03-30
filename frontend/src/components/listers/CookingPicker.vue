@@ -21,7 +21,7 @@
                                 OrderId :  {{item.orderId }}
                             </v-list-item-subtitle>
                             <v-list-item-subtitle>
-                                Address :  {{item.address }}
+                                FoodName :  {{item.foodName }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
 

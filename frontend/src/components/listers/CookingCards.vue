@@ -70,7 +70,7 @@
             me.newValue = {
                 'status': '',
                 'orderId': 0,
-                'address': '',
+                'foodName': '',
             }
         },
         methods:{

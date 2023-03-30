@@ -11,6 +11,10 @@ public class DeliveryConfirmed extends AbstractEvent {
 
     private Long id;
 
+    public DeliveryConfirmed(Delivery aggregate) {
+        super(aggregate);
+    }
+
     public DeliveryConfirmed() {
         super();
     }

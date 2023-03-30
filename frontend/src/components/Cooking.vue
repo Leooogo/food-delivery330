@@ -19,7 +19,7 @@
         <v-card-text>
             <String label="Status" v-model="value.status" :editMode="editMode"/>
             <Number label="OrderId" v-model="value.orderId" :editMode="editMode"/>
-            <String label="Address" v-model="value.address" :editMode="editMode"/>
+            <String label="FoodName" v-model="value.foodName" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>
@@ -38,9 +38,7 @@
                     @click="save"
                     v-else
             >
-                AcceptOrReject
-                Start
-                Finish
+                Save
             </v-btn>
             <v-btn
                     color="deep-purple lighten-2"
@@ -61,6 +59,36 @@
         </v-card-actions>
         <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn
+                    v-if="!editMode"
+                    color="deep-purple lighten-2"
+                    text
+                    @click="openAcceptOrReject"
+            >
+                AcceptOrReject
+            </v-btn>
+            <v-dialog v-model="acceptOrRejectDiagram" width="500">
+                <AcceptOrRejectCommand
+                        @closeDialog="closeAcceptOrReject"
+                        @acceptOrReject="acceptOrReject"
+                ></AcceptOrRejectCommand>
+            </v-dialog>
+            <v-btn
+                    v-if="!editMode"
+                    color="deep-purple lighten-2"
+                    text
+                    @click="start"
+            >
+                Start
+            </v-btn>
+            <v-btn
+                    v-if="!editMode"
+                    color="deep-purple lighten-2"
+                    text
+                    @click="finish"
+            >
+                Finish
+            </v-btn>
         </v-card-actions>
 
         <v-snackbar
@@ -98,6 +126,7 @@
                 timeout: 5000,
                 text: ''
             },
+            acceptOrRejectDiagram: false,
         }),
         computed:{
         },
@@ -191,6 +220,70 @@
             },
             change(){
                 this.$emit('input', this.value);
+            },
+            async acceptOrReject(params) {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['accept-or-reject'].href), params)
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                    this.closeAcceptOrReject();
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            openAcceptOrReject() {
+                this.acceptOrRejectDiagram = true;
+            },
+            closeAcceptOrReject() {
+                this.acceptOrRejectDiagram = false;
+            },
+            async start() {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['start'].href))
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async finish() {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['finish'].href))
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
             },
         },
     }

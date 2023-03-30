@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class PolicyHandler {
 
+    @Autowired
+    DeliveryRepository deliveryRepository;
+
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}
 
@@ -28,8 +31,9 @@ public class PolicyHandler {
         System.out.println(
             "\n\n##### listener LoadDeliveryInfo : " + accepted + "\n\n"
         );
-        // Sample Logic //
 
+        // Sample Logic //
+        Delivery.loadDeliveryInfo(event);
     }
 
     @StreamListener(
@@ -43,7 +47,8 @@ public class PolicyHandler {
         System.out.println(
             "\n\n##### listener LoadDeliveryInfo : " + orderPlaced + "\n\n"
         );
-        // Sample Logic //
 
+        // Sample Logic //
+        Delivery.loadDeliveryInfo(event);
     }
 }

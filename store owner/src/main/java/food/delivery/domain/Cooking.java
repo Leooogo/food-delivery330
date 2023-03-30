@@ -47,6 +47,21 @@ public class Cooking {
         return cookingRepository;
     }
 
+    public void acceptOrReject(AcceptOrRejectCommand acceptOrRejectCommand) {
+        Accepted accepted = new Accepted(this);
+        accepted.publishAfterCommit();
+    }
+
+    public void start() {
+        CookStarted cookStarted = new CookStarted(this);
+        cookStarted.publishAfterCommit();
+    }
+
+    public void finish() {
+        CookFinished cookFinished = new CookFinished(this);
+        cookFinished.publishAfterCommit();
+    }
+
     public static void loadOrderInfo(OrderPlaced orderPlaced) {
         /** Example 1:  new item 
         Cooking cooking = new Cooking();
