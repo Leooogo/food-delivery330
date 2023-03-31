@@ -47,27 +47,21 @@ public class Cooking {
         return cookingRepository;
     }
 
-    public void acceptOrReject(AcceptOrRejectCommand acceptOrRejectCommand) {
-        Accepted accepted = new Accepted(this);
-        accepted.publishAfterCommit();
-    }
+    public void acceptOrReject(AcceptOrRejectCommand acceptOrRejectCommand) {}
 
-    public void start() {
-        CookStarted cookStarted = new CookStarted(this);
-        cookStarted.publishAfterCommit();
-    }
+    public void start() {}
 
-    public void finish() {
-        CookFinished cookFinished = new CookFinished(this);
-        cookFinished.publishAfterCommit();
-    }
+    public void finish() {}
 
     public static void loadOrderInfo(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
+        /** Example 1:  new item */
         Cooking cooking = new Cooking();
+        cooking.setOrderId(orderPlaced.getId());
+        cooking.setStatus(status: "대기중");
+        ///...
         repository().save(cooking);
 
-        */
+       
 
         /** Example 2:  finding and process
         
